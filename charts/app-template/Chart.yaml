@@ -1,0 +1,4 @@
+apiVersion: v2
+description: Simple kubemate app template
+name: app-template
+version: 0.0.0

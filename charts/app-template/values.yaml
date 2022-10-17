@@ -1,0 +1,69 @@
+image:
+  # image.repository -- The registry and image name for the application.
+  repository: "nginxdemos/nginx-hello"
+
+  # image.tag -- Docker image tag.
+  # Defaults to release version.
+  tag: ""
+
+  # image.pullPolicy -- Image pull policy.
+  pullPolicy: "IfNotPresent"
+
+# env -- Environment variables for the application.
+# An object with env var names as keys.
+env: {}
+#  MYVAR: myvalue
+
+# resources -- Resource constraints for the application.
+# This is necessary to prevent the application from accidentally stealing resources from another critical application.
+resources:
+  # resources.limits -- When the process attempts to allocate more resources it gets killed (and restarted eventually).
+  limits:
+    cpu: 200m
+    memory: 64Mi
+  # resources.requests -- The amount of resources the process require usually.
+  # This information is used by the Pod scheduler to distribute workloads across all available nodes/machines and to avoid overloading a single node.
+  requests:
+    cpu: 100m
+    memory: 32Mi
+
+# livenessProbe -- The healthcheck.
+livenessProbe:
+  path: "/healthz"
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  successThreshold: 1
+  timeoutSeconds: 1
+
+# readinessProbe -- The check that indicates when the application is initialized.
+readinessProbe:
+  path: "/healthz"
+  periodSeconds: 5
+  successThreshold: 1
+  timeoutSeconds: 1
+
+# replicas -- Number of Pods that should be scheduled to run this app.
+replicas: 1
+
+# service -- Service configuration.
+service:
+  type: ClusterIP
+  port: 8080
+  annotations: {}
+
+# ingress -- Ingress resource configuration.
+ingress:
+  enabled: true
+  class: ""
+  annotations: {}
+  host: ""
+  path: /
+  tlsSecret: ""
+
+# nav -- Navigation configuration.
+nav:
+  # nav.title -- The title of the link pointing to the ingress resource within kubemate UI.
+  # Defaults to release name.
+  title: ""
+  # nav.iconURL -- Optional navigation item icon URL.
+  iconURL: ""
