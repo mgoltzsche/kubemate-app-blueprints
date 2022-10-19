@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: app
-        image: {{ include "image.reference" (list .Values.image .Chart.Version) | quote }}
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         env:
         {{- range $k, $v := .Values.env }}

@@ -3,8 +3,7 @@ image:
   repository: "nginxdemos/nginx-hello"
 
   # image.tag -- Docker image tag.
-  # Defaults to release version.
-  tag: ""
+  tag: "0.2"
 
   # image.pullPolicy -- Image pull policy.
   pullPolicy: "IfNotPresent"
@@ -14,29 +13,30 @@ image:
 env: {}
 #  MYVAR: myvalue
 
-# resources -- Resource constraints for the application.
-# This is necessary to prevent the application from accidentally stealing resources from another critical application.
 resources:
-  # resources.limits -- When the process attempts to allocate more resources it gets killed (and restarted eventually).
+  # resources.limits -- Hard resource constraints for the application.
+  # When it attempts to allocate more resources it gets killed (and restarted eventually).
   limits:
     cpu: 200m
     memory: 64Mi
-  # resources.requests -- The amount of resources the process require usually.
+  # resources.requests -- Resource constraints for the application.
+  # The amount of resources the process requires usually.
   # This information is used by the Pod scheduler to distribute workloads across all available nodes/machines and to avoid overloading a single node.
+  # The application may still allocate more resources.
   requests:
     cpu: 100m
     memory: 32Mi
 
-# livenessProbe -- The healthcheck.
 livenessProbe:
+  # livenessProbe.path -- Path to the liveness probe / health check endpoint.
   path: "/healthz"
   initialDelaySeconds: 10
   periodSeconds: 10
   successThreshold: 1
   timeoutSeconds: 1
 
-# readinessProbe -- The check that indicates when the application is initialized.
 readinessProbe:
+  # readinessProbe.path -- Path to the readiness probe endpoint.
   path: "/healthz"
   periodSeconds: 5
   successThreshold: 1
@@ -45,25 +45,31 @@ readinessProbe:
 # replicas -- Number of Pods that should be scheduled to run this app.
 replicas: 1
 
-# service -- Service configuration.
 service:
+  # service.type -- Service type, e.g. `ClusterIP`, `NodePort`, `LoadBalancer`.
   type: ClusterIP
+  # service.port -- Internal container port.
   port: 8080
   annotations: {}
 
-# ingress -- Ingress resource configuration.
 ingress:
+  # ingress.enabled -- Expose the application outside the cluster via HTTP.
   enabled: true
-  class: ""
+  # ingress.class -- The ingress class name.
+  # The default exposes the app only when deployed to kubemate.
+  # When you want the app to be exposed without authentication within any Kubernetes cluster, set this value to an empty string.
+  class: kubemate
   annotations: {}
+  # ingress.host -- The host name under which the application should be published.
+  # Defaults to the kubemate node host.
   host: ""
+  # ingress.path -- The path under which the application should be exposed.
   path: /
   tlsSecret: ""
 
-# nav -- Navigation configuration.
 nav:
-  # nav.title -- The title of the link pointing to the ingress resource within kubemate UI.
+  # nav.title -- The navigation entry title within kubemate UI.
   # Defaults to release name.
   title: ""
-  # nav.iconURL -- Optional navigation item icon URL.
+  # nav.iconURL -- Optional navigation entry icon URL.
   iconURL: ""

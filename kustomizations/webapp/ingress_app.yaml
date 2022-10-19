@@ -1,0 +1,23 @@
+# Source: app-template/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app
+  labels:
+    app.kubernetes.io/name: app
+    app: app
+  annotations:
+    kubemate.mgoltzsche.github.com/nav-title: "app"
+    kubernetes.io/ingress.class: kubemate
+spec:
+  ingressClassName: kubemate
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: app
+            port:
+              number: 8080
