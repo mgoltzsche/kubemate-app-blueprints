@@ -10,9 +10,6 @@ metadata:
     {{- if .Values.nav.iconURL }}
     kubemate.mgoltzsche.github.com/nav-icon: {{ .Values.nav.iconURL }}
     {{- end }}
-  {{- if .Values.ingress.class }}
-    kubernetes.io/ingress.class: {{ .Values.ingress.class }}
-  {{- end }}
   {{- if gt (len .Values.ingress.annotations) 0 }}
   {{- toYaml .Values.ingress.annotations | nindent 4 }}
   {{- end }}

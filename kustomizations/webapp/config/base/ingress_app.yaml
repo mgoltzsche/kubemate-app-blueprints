@@ -8,7 +8,6 @@ metadata:
     app: app
   annotations:
     kubemate.mgoltzsche.github.com/nav-title: "app"
-    kubernetes.io/ingress.class: kubemate
 spec:
   ingressClassName: kubemate
   rules:
