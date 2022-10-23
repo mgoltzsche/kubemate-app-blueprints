@@ -2,23 +2,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels: {{- include "labels.standard" . | nindent 4 }}
-    app: {{ .Release.Name }}
-  name: {{ .Release.Name }}
+  name: {{ .Release.Name }}{{ if .Values.kptSetter -}}{{ " # kpt-set: ${app-name}" }}{{ end }}
 spec:
   replicas: {{ .Values.replicas }}
   progressDeadlineSeconds: 300
   revisionHistoryLimit: 10
   selector:
-    matchLabels:
-      app: {{ .Release.Name }}
+    matchLabels: {{- include "labels.standard" . | nindent 6 }}
   template:
     metadata:
       labels: {{- include "labels.standard" . | nindent 8 }}
-        app: {{ .Release.Name }}
     spec:
       containers:
       - name: app
-        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}{{ if .Values.kptSetter -}}{{ " # kpt-set: ${image-name}:${image-tag}" }}{{ end }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         env:
         {{- range $k, $v := .Values.env }}

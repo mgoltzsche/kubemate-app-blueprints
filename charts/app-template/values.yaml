@@ -64,7 +64,8 @@ ingress:
   # Defaults to the kubemate node host.
   host: ""
   # ingress.path -- The path under which the application should be exposed.
-  path: /
+  # Defaults to the application name.
+  path: ""
   tlsSecret: ""
 
 nav:
@@ -73,3 +74,7 @@ nav:
   title: ""
   # nav.iconURL -- Optional navigation entry icon URL.
   iconURL: ""
+
+# kptSetter -- Enables kpt setter generation.
+# To use the setters afterwards, see https://catalog.kpt.dev/apply-setters/v0.2/
+kptSetter: false

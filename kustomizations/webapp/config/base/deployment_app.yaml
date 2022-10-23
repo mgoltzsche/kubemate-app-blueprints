@@ -3,25 +3,23 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app.kubernetes.io/name: app
-    app: app
-  name: app
+    app.kubernetes.io/name: sample-app # kpt-set: ${app-name}
+  name: sample-app # kpt-set: ${app-name}
 spec:
   replicas: 1
   progressDeadlineSeconds: 300
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      app: app
+      app.kubernetes.io/name: sample-app # kpt-set: ${app-name}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: app
-        app: app
+        app.kubernetes.io/name: sample-app # kpt-set: ${app-name}
     spec:
       containers:
       - name: app
-        image: nginxdemos/nginx-hello:0.2
+        image: nginxdemos/nginx-hello:0.2 # kpt-set: ${image-name}:${image-tag}
         imagePullPolicy: IfNotPresent
         env:
         resources:

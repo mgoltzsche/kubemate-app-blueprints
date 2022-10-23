@@ -6,3 +6,8 @@ metadata:
     config.kubernetes.io/local-config: "true"
 info:
   description: webapp example
+pipeline:
+  # Yaml transformation pipeline
+  mutators:
+  - image: gcr.io/kpt-fn/apply-setters:v0.2.0
+    configPath: ./setters.yaml
