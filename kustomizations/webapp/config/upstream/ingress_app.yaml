@@ -1,10 +1,9 @@
-# Source: app-template/templates/ingress.yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: sample-app # kpt-set: ${app-name}
+  name: ing
   labels:
-    app.kubernetes.io/name: sample-app # kpt-set: ${app-name}
+    app.kubernetes.io/name: app
   annotations:
     kubemate.mgoltzsche.github.com/nav-title: "app"
 spec:
@@ -12,10 +11,10 @@ spec:
   rules:
   - http:
       paths:
-      - path: /sample-app # kpt-set: /${app-name}
+      - path: /app/
         pathType: Prefix
         backend:
           service:
-            name: sample-app # kpt-set: ${app-name}
+            name: app
             port:
               number: 8080

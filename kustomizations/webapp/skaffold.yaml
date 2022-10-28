@@ -13,9 +13,3 @@ manifests:
   kustomize:
     paths:
     - config/default
-profiles:
-- name: base
-  manifests:
-    kustomize:
-      paths:
-      - config/base
