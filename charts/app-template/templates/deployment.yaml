@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels: {{- include "labels.standard" . | nindent 4 }}
+  name: {{ .Release.Name }}{{ if .Values.kptSetter -}}{{ " # kpt-set: ${app-name}" }}{{ end }}
+spec:
+  replicas: {{ .Values.replicas }}
+  progressDeadlineSeconds: 300
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels: {{- include "labels.standard" . | nindent 6 }}
+  template:
+    metadata:
+      labels: {{- include "labels.standard" . | nindent 8 }}
+    spec:
+      containers:
+      - name: app
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}{{ if .Values.kptSetter -}}{{ " # kpt-set: ${image-name}:${image-tag}" }}{{ end }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+        {{- range $k, $v := .Values.env }}
+        - name: {{ $k }}
+          value: {{ $v | quote }}
+        {{- end }}
+        resources:
+        {{- toYaml .Values.resources | nindent 12 }}
+        {{- if .Values.service }}
+        ports:
+        - containerPort: {{ .Values.service.port }}
+        {{- if .Values.livenessProbe.path }}
+        livenessProbe:
+          httpGet:
+            path: {{ .Values.livenessProbe.path | quote }}
+            port: {{ .Values.service.port }}
+          initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+          successThreshold: {{ .Values.livenessProbe.successThreshold }}
+          timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+        {{- end }}
+        {{- if .Values.readinessProbe.path }}
+        readinessProbe:
+          httpGet:
+            path: {{ .Values.readinessProbe.path | quote }}
+            port: {{ .Values.service.port }}
+          periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+          successThreshold: {{ .Values.readinessProbe.successThreshold }}
+          timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+        {{- end }}
+        {{- end }}
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      securityContext: {}
+      terminationGracePeriodSeconds: 10
+      serviceAccountName: {{ .Release.Name }}

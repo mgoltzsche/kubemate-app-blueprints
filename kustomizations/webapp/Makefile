@@ -25,7 +25,7 @@ kpt-live-apply kpt-live-destroy: kpt-live-%: $(KPT_RESOURCEGROUP)
 
 render: kpt-fn-render
 kpt-fn-render: kpt-fn-%:
-	docker run -i --rm \
+	docker run -i --rm -u "`id -u`:`id -g`" --group-add 998 \
 		-v "/var/run/docker.sock:/var/run/docker.sock" \
 		-v "`pwd`:/data" \
 		$(KPT_IMAGE) fn $* /data --truncate-output=false
@@ -39,8 +39,9 @@ skaffold-run skaffold-stop skaffold-build skaffold-delete skaffold-debug skaffol
 		$(SKAFFOLD_IMAGE) skaffold $* $(SKAFFOLD_OPTS)
 
 update:
-	docker run --rm -u "`id -u`:`id -g`" -v `pwd`:/data -w /data \
-		$(KPT_IMAGE) pkg update kustomizations/webapp
+	mkdir -p $$HOME/.kpt
+	docker run --rm -u "`id -u`:`id -g`" -v "$$HOME/.kpt:/.kpt" -v `pwd`:/data -w /data \
+		$(KPT_IMAGE) pkg update .
 
 $(KPT_RESOURCEGROUP):
 	docker run --rm -u "`id -u`:`id -g`" -v `pwd`:/data -w /data \

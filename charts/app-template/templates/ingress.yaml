@@ -1,0 +1,36 @@
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}{{ if .Values.kptSetter -}}{{ " # kpt-set: ${app-name}" }}{{ end }}
+  labels: {{- include "labels.standard" . | nindent 4 }}
+  annotations:
+    kubemate.mgoltzsche.github.com/nav-title: {{ default .Release.Name .Values.nav.title | quote }}
+    {{- if .Values.nav.iconURL }}
+    kubemate.mgoltzsche.github.com/nav-icon: {{ .Values.nav.iconURL }}
+    {{- end }}
+  {{- if gt (len .Values.ingress.annotations) 0 }}
+  {{- toYaml .Values.ingress.annotations | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if .Values.ingress.class }}
+  ingressClassName: {{ .Values.ingress.class }}
+  {{- end }}
+  rules:
+    - {{ if .Values.ingress.host -}}host: {{ .Values.ingress.host }}{{- end }}
+      http:
+        paths:
+          - path: {{ if .Values.ingress.path }}{{ .Values.ingress.path }}{{else}}/{{ .Release.Name }}/{{end}}{{ if .Values.kptSetter -}}{{ " # kpt-set: /${app-name}" }}{{ end }}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Release.Name }}{{ if .Values.kptSetter -}}{{ " # kpt-set: ${app-name}" }}{{ end }}
+                port:
+                  number: {{ .Values.service.port }}
+  {{- if and .Values.ingress.host .Values.ingress.tlsSecret }}
+  tls:
+    - hosts:
+      - {{- .Values.ingress.host }}
+      secretName: {{- .Values.ingress.tlsSecret }}
+  {{- end }}
+{{- end }}

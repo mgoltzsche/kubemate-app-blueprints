@@ -1,0 +1,14 @@
+apiVersion: blueprints.kubemate.mgoltzsche.github.com/v1alpha1
+kind: Webapp
+metadata:
+  name: sample-app
+values:
+  image:
+    repository: nginxdemos/nginx-hello
+  skaffold: true
+#outputPath: config/generated/
+outputPathMapping:
+- outputPath: skaffold.yaml
+  selectors:
+  - apiVersion: skaffold/v3alpha1
+    kind: Config
