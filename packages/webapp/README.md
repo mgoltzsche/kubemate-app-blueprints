@@ -6,11 +6,11 @@ kubemate webapp blueprint.
 ## Usage
 
 ### Fetch the package
-`kpt pkg get https://github.com/mgoltzsche/kubemate-app-blueprints.git/kustomizations/webapp[@VERSION] myapp`
+`kpt pkg get https://github.com/mgoltzsche/kubemate-app-blueprints.git/packages/webapp[@VERSION] myapp`
 
 or with `docker`:
 ```
-docker run --rm -u `id -u` -e HOME=/tmp -v `pwd`:/data -w /data gcr.io/kpt-dev/kpt:v1.0.0-beta.21 pkg get https://github.com/mgoltzsche/kubemate-app-blueprints.git/kustomizations/webapp myapp
+docker run --rm -u `id -u` -e HOME=/tmp -v `pwd`:/data -w /data gcr.io/kpt-dev/kpt:v1.0.0-beta.21 pkg get https://github.com/mgoltzsche/kubemate-app-blueprints.git/packages/webapp myapp
 ```
 
 Details: https://kpt.dev/reference/cli/pkg/get/

@@ -6,7 +6,7 @@ values:
   image:
     repository: nginxdemos/nginx-hello
   skaffold: true
-#outputPath: config/generated/
+outputPath: deploy/generated/
 outputPathMapping:
 - outputPath: skaffold.yaml
   selectors:

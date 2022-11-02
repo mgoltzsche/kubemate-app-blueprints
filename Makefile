@@ -10,7 +10,7 @@
 
 CHARTS=$(shell ls ./charts)
 CHARTS_TARGETS=$(addprefix charts-,$(CHARTS))
-PACKAGES=$(shell ls ./kustomizations)
+PACKAGES=$(shell ls ./packages)
 RENDER_TARGETS=$(addprefix render-,$(PACKAGES))
 
 all: render
@@ -24,11 +24,11 @@ $(CHARTS_TARGETS): charts-%:
 render: $(RENDER_TARGETS) ## Render all kpt functions / generate manifests.
 
 $(RENDER_TARGETS): render-%:
-	make kpt-fn-render -C ./kustomizations/$*
+	make kpt-fn-render -C ./packages/$*
 
 kpt-pkg-update:
 	docker run --rm -u `id -u` -v `pwd`:/data -w /data \
-		gcr.io/kpt-dev/kpt:v1.0.0-beta.21 pkg update kustomizations/webapp
+		gcr.io/kpt-dev/kpt:v1.0.0-beta.21 pkg update packages/webapp
 
 .PHONY: help
 help: ## Display this help.

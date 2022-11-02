@@ -13,5 +13,5 @@ build:
 manifests:
   kustomize:
     paths:
-    - config/default
+    - ./deploy/default
 {{- end }}

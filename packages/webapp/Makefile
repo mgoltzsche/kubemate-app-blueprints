@@ -42,6 +42,7 @@ update:
 	mkdir -p $$HOME/.kpt
 	docker run --rm -u "`id -u`:`id -g`" -v "$$HOME/.kpt:/.kpt" -v `pwd`:/data -w /data \
 		$(KPT_IMAGE) pkg update .
+	make kpt-fn-render
 
 $(KPT_RESOURCEGROUP):
 	docker run --rm -u "`id -u`:`id -g`" -v `pwd`:/data -w /data \
