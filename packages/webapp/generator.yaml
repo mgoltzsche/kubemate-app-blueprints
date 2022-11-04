@@ -5,6 +5,10 @@ metadata:
 values:
   image:
     repository: nginxdemos/nginx-hello
+  #service:
+  #  port: 8080
+  #ingress:
+  #  path: /
   skaffold: true
 outputPath: deploy/generated/
 outputPathMapping:
