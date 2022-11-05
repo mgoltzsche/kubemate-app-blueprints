@@ -1,0 +1,15 @@
+apiVersion: skaffold/v3alpha1
+kind: Config
+metadata:
+  name: data
+build:
+  artifacts:
+  - image: nginxdemos/nginx-hello # kpt-set: ${image-name}
+    docker:
+      dockerfile: Dockerfile
+  local:
+    push: false
+manifests:
+  kustomize:
+    paths:
+    - ./deploy/default

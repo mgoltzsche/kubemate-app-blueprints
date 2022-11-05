@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy
+spec:
+  replicas: 1
+  progressDeadlineSeconds: 300
+  revisionHistoryLimit: 10
+  template:
+    spec:
+      containers:
+      - name: app
+        image: nginxdemos/nginx-hello:0.2 # kpt-set: ${image-name}:${image-tag}
+        imagePullPolicy: IfNotPresent
+        env: []
+        resources:
+          limits:
+            cpu: 200m
+            memory: 64Mi
+          requests:
+            cpu: 100m
+            memory: 32Mi
+        ports:
+        - containerPort: 8080 # kpt-set: ${port}
+        livenessProbe:
+          httpGet:
+            path: "/healthz"
+            port: 8080 # kpt-set: ${port}
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        readinessProbe:
+          httpGet:
+            path: "/healthz"
+            port: 8080 # kpt-set: ${port}
+          periodSeconds: 5
+          successThreshold: 1
+          timeoutSeconds: 1
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      securityContext: {}
+      terminationGracePeriodSeconds: 10
+      serviceAccountName: sample-app-sa # kpt-set: ${name}-sa

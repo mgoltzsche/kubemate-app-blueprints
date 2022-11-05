@@ -6,6 +6,5 @@ info:
   description: webapp example
 pipeline:
   mutators:
-  # generates the base kustomization
-  - image: mgoltzsche/kubemate-webapp-manifest-generator:latest
-    configPath: ./generator.yaml
+  - image: gcr.io/kpt-fn/apply-setters:v0.2.0
+    configPath: ./setters.yaml

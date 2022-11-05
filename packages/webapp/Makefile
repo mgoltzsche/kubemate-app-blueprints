@@ -1,4 +1,4 @@
-IMAGE_NAME ?= $(shell grep ' image: ' skaffold.yaml | sed -E 's/^\s+- image: //; s/\#.*//')
+IMAGE_NAME ?= $(shell grep ' image: ' skaffold.yaml | sed -E 's/^\s+- image: //; s/[ ]*\#.*//')
 IMAGE_TAG := dev
 IMAGE := $(IMAGE_NAME):$(IMAGE_TAG)
 #KPT_IMAGE=gcr.io/kpt-dev/kpt:v1.0.0-beta.21
@@ -91,7 +91,7 @@ skaffold-run skaffold-stop skaffold-build skaffold-delete skaffold-debug skaffol
 update:
 	mkdir -p $$HOME/.kpt
 	docker run --rm -u "`id -u`:`id -g`" -v "$$HOME/.kpt:/.kpt" -v `pwd`:/data -w /data \
-		$(KPT_IMAGE) pkg update .
+		$(KPT_IMAGE) pkg update --strategy=resource-merge .
 	make kpt-fn-render
 
 .PHONY: help
