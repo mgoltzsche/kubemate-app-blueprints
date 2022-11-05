@@ -8,7 +8,12 @@ values:
   #service:
   #  port: 8080
   #ingress:
-  #  path: /
+  #  paths:
+  #  - /sample-app/
+  #livenessProbe:
+  #  path: /healthz
+  #readinessProbe:
+  #  path: /healthz
   skaffold: true
 outputPath: deploy/generated/
 outputPathMapping:

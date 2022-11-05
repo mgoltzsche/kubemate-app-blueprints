@@ -48,6 +48,7 @@ manifest:
 
 ##@ Release
 
+.PHONY: release
 release: PLATFORM = linux/arm64/v8,linux/amd64
 release: BUILD_OPTS = -t $(IMAGE) -t $(IMAGE_NAME):latest
 release: EXPORT_OPTS = --push

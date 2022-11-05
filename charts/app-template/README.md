@@ -16,7 +16,7 @@ Simple kubemate app template
 | ingress.class | string | `"kubemate"` | The ingress class name. The default exposes the app only when deployed to kubemate. When you want the app to be exposed without authentication within any Kubernetes cluster, set this value to an empty string. |
 | ingress.enabled | bool | `true` | Expose the application outside the cluster via HTTP. |
 | ingress.host | string | `""` | The host name under which the application should be published. Defaults to the kubemate node host. |
-| ingress.path | string | `""` | The path under which the application should be exposed. Defaults to the application name. |
+| ingress.paths | list | `[]` | The path prefixes under which the application should be exposed. Defaults to `/<appname>/`. |
 | ingress.tlsSecret | string | `""` |  |
 | kptSetter | bool | `false` | Enables kpt setter generation. To use the setters afterwards, see https://catalog.kpt.dev/apply-setters/v0.2/ |
 | livenessProbe.initialDelaySeconds | int | `10` |  |

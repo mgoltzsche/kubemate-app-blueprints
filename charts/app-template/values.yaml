@@ -63,9 +63,9 @@ ingress:
   # ingress.host -- The host name under which the application should be published.
   # Defaults to the kubemate node host.
   host: ""
-  # ingress.path -- The path under which the application should be exposed.
-  # Defaults to the application name.
-  path: ""
+  # ingress.paths -- The path prefixes under which the application should be exposed.
+  # Defaults to `/<appname>/`.
+  paths: []
   tlsSecret: ""
 
 nav:
