@@ -1,0 +1,8 @@
+apiVersion: blueprints.kubemate.mgoltzsche.github.com/v1alpha1
+kind: ImageBuild
+metadata:
+  name: data
+images:
+- name: nginxdemos/nginx-hello # kpt-set: ${image-name}
+  dockerfile: Dockerfile
+  context: .
