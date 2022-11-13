@@ -1,6 +1,9 @@
-# This is the base overlay that provides the minimal generic configuration (namespace-agnostic, ideally).
-# Project-specific kustomization changes should be defined here.
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+commonLabels:
+  app.kubernetes.io/name: blueprint # kpt-set: ${name}
 resources:
-- ../boilerplate
+- serviceaccount.yaml
+- service.yaml
+- deployment.yaml
+- ingress.yaml

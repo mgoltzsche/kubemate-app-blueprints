@@ -26,7 +26,7 @@ image: skaffold-build ## Build the image(s) for the host architecture.
 ##@ Deploy
 
 .PHONY: deploy
-deploy: skaffold-run ## Deploy the application into selected cluster.
+deploy: skaffold-run ## Deploy the application into the selected cluster.
 .PHONY: undeploy
 undeploy: skaffold-delete ## Undeploy the debug application.
 
@@ -53,11 +53,12 @@ kpt-pkg-update:
 		-v `pwd`:/data -w /data \
 		$(KPT_IMAGE) pkg update --strategy=$(KPT_PKG_UPDATE_STRATEGY) .
 
+skaffold-debug skaffold-dev: DOCKER_RUN_OPTS = -ti
+skaffold-debug skaffold-dev skaffold-run skaffold-stop skaffold-delete: DOCKER_RUN_OPTS += --mount "type=bind,src=$(KUBECONFIG),dst=/tmp/.kube/config,ro"
 skaffold-run skaffold-stop skaffold-build skaffold-dev skaffold-delete skaffold-debug skaffold-survey skaffold-help: skaffold-%:
-	$(DOCKER) run -it --rm -v "`pwd`:/workspace" -w /workspace --network=host \
+	$(DOCKER) run $(DOCKER_RUN_OPTS) --rm -v "`pwd`:/workspace" -w /workspace --network=host \
 		-v "/var/run/docker.sock:/var/run/docker.sock" \
 		--mount "type=bind,src=$$HOME/.docker,dst=/tmp/.docker" \
-		--mount "type=bind,src=$(KUBECONFIG),dst=/tmp/.kube/config,ro" \
 		-e HOME=/tmp \
 		$(SKAFFOLD_IMAGE) skaffold $* $(SKAFFOLD_OPTS)
 
@@ -67,10 +68,20 @@ help: ## Display this help.
 
 ##@ Release
 
-.PHONY: release
-release: SKAFFOLD_OPTS = --push --platform=$(PLATFORMS)
-release: skaffold-build ## Build and push the multi-arch image(s).
+# TODO: align image tags, pin within manifests
+
+.PHONY: push-image
+push-image: REGISTRY ?= ghcr.io
+push-image: SKAFFOLD_OPTS = --push --platform=$(PLATFORMS) --default-repo=$(REGISTRY)
+push-image: render require-clean-worktree skaffold-build ## Build and push the multi-arch image(s).
 
 .PHONY: binfmt-config
 binfmt-config: ## Enable multi-arch support on the host.
 	$(DOCKER) run --rm --privileged multiarch/qemu-user-static:7.0.0-7 --reset -p yes
+
+require-clean-worktree:
+	@[ -z "`git status --untracked-files=no --porcelain`" ] || (\
+		echo 'ERROR: the build changed files that are tracked by git:'; \
+		git status --untracked-files=no --porcelain | sed -E 's/^/  /'; \
+		echo 'Please run `make render` and commit the resulting changes!'; \
+		false) >&2
