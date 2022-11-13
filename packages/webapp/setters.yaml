@@ -1,14 +1,13 @@
-# Define the application name and image here.
-# To apply the change to kustomization.yaml and skaffold.yaml, call:
-#   make kpt-fn-render
-# and commit the changes afterwards.
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: app-config
+  name: kptfile.kpt.dev
+  annotations:
+    config.kubernetes.io/local-config: "true"
 data:
-  name: "sample-app"
-  title: "Sample App"
-  image-name: "nginxdemos/nginx-hello"
+  name: blueprint
+  title: Your App Title
+  image-name: nginxdemos/nginx-hello
   image-tag: "0.2"
   port: 8080
+  healthcheck: /healthz

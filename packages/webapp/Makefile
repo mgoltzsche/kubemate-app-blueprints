@@ -11,6 +11,7 @@ PLATFORM ?= $(PLATFORM_OS)/$(PLATFORM_ARCH)
 PLATFORMS = $(shell grep platforms: skaffold.yaml | sed -E 's/\s+platforms: +//')
 
 
+.PHONY: all
 all: image
 
 ##@ Build
@@ -69,24 +70,3 @@ release: skaffold-build ## Build and push the multi-arch image(s).
 .PHONY: binfmt-config
 binfmt-config: ## Enable multi-arch support on the host.
 	$(DOCKER) run --rm --privileged multiarch/qemu-user-static:7.0.0-7 --reset -p yes
-
-
-#BIN_DIR := ./bin
-#SKAFFOLD ?= $(if $(shell which skaffold),$(shell which skaffold),$(BIN_DIR)/skaffold)
-#SKAFFOLD_VERSION = v2.0.1
-
-#$(SKAFFOLD):
-#	$(call download-bin,$(SKAFFOLD),https://github.com/GoogleContainerTools/skaffold/releases/download/$(SKAFFOLD_VERSION)/skaffold-$(PLATFORM_OS)-$(PLATFORM_ARCH))
-
-# download-bin downloads a binary into the location given as first argument
-define download-bin
-@[ -f "$(1)" ] || { \
-set -e ;\
-mkdir -p "`dirname "$(1)"`" ;\
-TMP_FILE=$$(mktemp -p "`dirname "$(1)"`") ;\
-echo "Downloading $(2)" ;\
-curl -fsSLo "$$TMP_FILE" "$(2)" ;\
-chmod +x "$$TMP_FILE" ;\
-mv "$$TMP_FILE" "$(1)" ;\
-}
-endef

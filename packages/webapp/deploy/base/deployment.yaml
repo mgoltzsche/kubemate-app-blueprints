@@ -1,13 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: deploy
+  name: blueprint # kpt-set: ${name}
 spec:
   replicas: 1
   progressDeadlineSeconds: 300
   revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: webapp
   template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: webapp
     spec:
+      serviceAccountName: blueprint # kpt-set: ${name}
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 10
       containers:
       - name: app
         image: nginxdemos/nginx-hello:0.2 # kpt-set: ${image-name}:${image-tag}
@@ -24,21 +34,17 @@ spec:
         - containerPort: 8080 # kpt-set: ${port}
         livenessProbe:
           httpGet:
-            path: "/healthz"
+            path: "/healthz" # kpt-set: ${healthcheck}
             port: 8080 # kpt-set: ${port}
           initialDelaySeconds: 10
           periodSeconds: 10
           successThreshold: 1
-          timeoutSeconds: 1
+          timeoutSeconds: 2
         readinessProbe:
           httpGet:
-            path: "/healthz"
+            path: "/healthz" # kpt-set: ${healthcheck}
             port: 8080 # kpt-set: ${port}
-          periodSeconds: 5
+          initialDelaySeconds: 1
+          periodSeconds: 3
           successThreshold: 1
-          timeoutSeconds: 1
-      dnsPolicy: ClusterFirst
-      restartPolicy: Always
-      securityContext: {}
-      terminationGracePeriodSeconds: 10
-      serviceAccountName: sample-app-sa # kpt-set: ${name}-sa
+          timeoutSeconds: 2

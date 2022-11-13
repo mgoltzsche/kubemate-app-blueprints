@@ -1,18 +1,19 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ing
+  name: blueprint # kpt-set: ${name}
   annotations:
-    kubemate.mgoltzsche.github.com/nav-title: "Sample App" # kpt-set: ${title}
+    kubemate.mgoltzsche.github.com/nav-title: "Your App Title" # kpt-set: ${title}
+    #kubemate.mgoltzsche.github.com/rewrite-target: /
 spec:
   ingressClassName: kubemate
   rules:
   - http:
       paths:
-      - path: /sample-app/ # kpt-set: /${name}/
+      - path: /blueprint/ # kpt-set: /${name}/
         pathType: Prefix
         backend:
           service:
-            name: sample-app-svc # kpt-set: ${name}-svc
+            name: blueprint # kpt-set: ${name}
             port:
               number: 8080 # kpt-set: ${port}
