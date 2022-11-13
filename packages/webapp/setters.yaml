@@ -1,10 +1,13 @@
+# kpt setter values that are applied to other KRM yaml files by `kpt fn render`.
+# See also: https://kpt.dev/guides/variant-constructor-pattern
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: kptfile.kpt.dev
+  name: app-config
   annotations:
     config.kubernetes.io/local-config: "true"
 data:
+  # TODO: Set your project-specific configuration here!
   name: blueprint
   title: Your App Title
   image-name: nginxdemos/nginx-hello
