@@ -7,10 +7,11 @@ metadata:
   annotations:
     config.kubernetes.io/local-config: "true"
 data:
-  # TODO: Set your project-specific configuration here!
+  version: "0.2"
+  # TODO: Set your project-specific configuration below!
   name: blueprint
   title: Your App Title
-  image-name: nginxdemos/nginx-hello
-  image-tag: "0.2"
+  # ghcr.io/yourgithubuser/name
+  image: nginxdemos/nginx-hello
   port: 8080
   healthcheck: /healthz

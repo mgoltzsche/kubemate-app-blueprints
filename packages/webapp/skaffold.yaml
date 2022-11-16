@@ -3,12 +3,12 @@ kind: Config
 metadata:
   name: data
   annotations:
-    platforms: linux/arm64/v8,linux/amd64
+    kubemate.mgoltzsche.github.com/platforms: linux/arm64/v8,linux/amd64
 build:
   tagPolicy:
     gitCommit: {}
   artifacts:
-  - image: nginxdemos/nginx-hello # kpt-set: ${image-name}
+  - image: nginxdemos/nginx-hello # kpt-set: ${image}
     docker:
       dockerfile: Dockerfile
   local:

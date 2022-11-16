@@ -20,7 +20,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: app
-        image: nginxdemos/nginx-hello:0.2 # kpt-set: ${image-name}:${image-tag}
+        image: nginxdemos/nginx-hello:0.2 # kpt-set: ${image}:${version}
         imagePullPolicy: IfNotPresent
         env: []
         resources:
