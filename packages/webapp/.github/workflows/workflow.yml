@@ -31,8 +31,13 @@ jobs:
       run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
       if: github.ref == 'refs/heads/main'
     - name: Semantic Release
-      uses: codfish/semantic-release-action@v2
+      uses: cycjimmy/semantic-release-action@v3
       if: github.ref == 'refs/heads/main'
+      with:
+        semantic_version: 19
+        extra_plugins: |
+          @semantic-release/exec@6.0.3
+          @semantic-release/git@10.0.1
       env:
         GITHUB_TOKEN: ${{ github.token }}
 

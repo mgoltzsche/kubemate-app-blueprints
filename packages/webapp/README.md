@@ -65,16 +65,3 @@ TL;DR: [Variant Constructor Pattern](https://kpt.dev/guides/variant-constructor-
 ## Release
 
 The release process is driven by [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0-beta.4/), letting the CI pipeline generate a version and publish a release depending on the [commit messages](https://github.com/caarlos0/svu#commit-messages-vs-what-they-do) on the `main` branch.
-
-To test the release locally, run:
-```sh
-make binfmt-config
-make release-test
-```
-
-If you must create a release manually, run:
-```sh
-make binfmt-config
-make release VERSION=$VERSION
-```
-where `$VERSION` specifies a non-existing semantic version without leading `v`, e.g. `1.2.3`.
