@@ -2,8 +2,6 @@ apiVersion: skaffold/v3alpha1
 kind: Config
 metadata:
   name: data
-  annotations:
-    kubemate.mgoltzsche.github.com/platforms: linux/arm64/v8,linux/amd64
 build:
   tagPolicy:
     gitCommit: {}
@@ -13,8 +11,16 @@ build:
       dockerfile: Dockerfile
   local:
     push: false
-    useBuildkit: true
 manifests:
   kustomize:
     paths:
     - ./deploy/default
+profiles:
+- name: release
+  build:
+    platforms:
+    - linux/arm64/v8
+    - linux/amd64
+    local:
+      push: true
+      useBuildkit: true
