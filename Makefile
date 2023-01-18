@@ -1,25 +1,7 @@
-#generate: generate-helm-docs generate-kustomization
-
-#generate-helm-docs:
-#	make -C charts/app-template
-
-#generate-kustomization:
-#	docker run --rm -u `id -u` -v `pwd`:/data -w /data \
-#		mgoltzsche/khelm:2.2.1 \
-#		template app charts/app-template/ --set kptSetter=false --set image.repository=appimage --set image.tag=tag -o kustomizations/webapp/config/base/ --output-replace
-
-CHARTS=$(shell ls ./charts)
-CHARTS_TARGETS=$(addprefix charts-,$(CHARTS))
 PACKAGES=$(shell ls ./packages)
 RENDER_TARGETS=$(addprefix render-,$(PACKAGES))
 
 all: render
-
-.PHONY: charts
-charts: $(CHARTS_TARGETS) ## Build all chart kpt functions.
-
-$(CHARTS_TARGETS): charts-%:
-	make image -C ./charts/$*
 
 render: $(RENDER_TARGETS) ## Render all kpt functions / generate manifests.
 
