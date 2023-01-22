@@ -1,6 +1,6 @@
 # webapp blueprint
 
-kubemate web application blueprint.
+kubemate web application blueprint based on the app blueprint.
 
 ## Usage
 Create a new application by fetching, configuring and rendering this [kpt](https://kpt.dev/) package.

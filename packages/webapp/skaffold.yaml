@@ -1,7 +1,9 @@
 apiVersion: skaffold/v3alpha1
 kind: Config
-metadata:
+metadata: # kpt-merge: /data
   name: data
+  annotations:
+    internal.kpt.dev/upstream-identifier: 'skaffold|Config|default|data'
 build:
   tagPolicy:
     gitCommit: {}
