@@ -13,7 +13,7 @@ kpt pkg get https://github.com/mgoltzsche/kubemate-app-blueprints.git/packages/w
 
 or with `docker`:
 ```sh
-docker run --rm -u `id -u` -e HOME=/tmp -v `pwd`:/data -w /data gcr.io/kpt-dev/kpt:v1.0.0-beta.24 pkg get https://github.com/mgoltzsche/kubemate-app-blueprints.git/packages/webapp myapp
+docker run --rm -u `id -u` -e HOME=/tmp -v `pwd`:/data -w /data gcr.io/kpt-dev/kpt:v1.0.0-beta.25 pkg get https://github.com/mgoltzsche/kubemate-app-blueprints.git/packages/webapp myapp
 ```
 
 See [`kpt pkg get` documentation](https://kpt.dev/reference/cli/pkg/get/).
