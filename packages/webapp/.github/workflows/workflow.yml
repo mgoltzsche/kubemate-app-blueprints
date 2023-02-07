@@ -25,7 +25,7 @@ jobs:
       uses: docker/setup-qemu-action@v1
       with:
         platforms: all
-    - name: Build container image
+    - name: Build container image(s)
       run: make image
     - name: Log into GitHub registry
       run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
