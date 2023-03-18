@@ -9,8 +9,8 @@ $(RENDER_TARGETS): render-%:
 	make kpt-fn-render -C ./packages/$*
 
 kpt-pkg-update:
-	docker run --rm -u `id -u` -v `pwd`:/data -w /data \
-		gcr.io/kpt-dev/kpt:v1.0.0-beta.21 pkg update packages/webapp
+	docker run --rm -u `id -u` -v `pwd`:/data -w /data -e HOME=/tmp/home \
+		gcr.io/kpt-dev/kpt:v1.0.0-beta.25 pkg update packages/webapp
 
 .PHONY: help
 help: ## Display this help.
