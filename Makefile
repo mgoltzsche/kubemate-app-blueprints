@@ -10,7 +10,7 @@ $(RENDER_TARGETS): render-%:
 
 kpt-pkg-update:
 	docker run --rm -u `id -u` -v `pwd`:/data -w /data -e HOME=/tmp/home \
-		gcr.io/kpt-dev/kpt:v1.0.0-beta.25 pkg update packages/webapp
+		gcr.io/kpt-dev/kpt:v1.0.0-beta.32 pkg update packages/webapp
 
 .PHONY: help
 help: ## Display this help.

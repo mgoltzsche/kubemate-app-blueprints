@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ${APP_NAME:=app}-defaultconfig
+# TODO: specify the default configuration for your app
+#stringData:
+#  EXAMPLE_VAR: "value-a"

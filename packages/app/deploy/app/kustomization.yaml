@@ -1,0 +1,11 @@
+resources:
+- configschema.yaml
+- defaultconfig.yaml
+- ../default
+
+# TODO: to pass the config through, patch the workloads of your app as follows:
+# envFrom:
+# - secretRef:
+#   name: ${APP_NAME:=app}-defaultconfig
+# - secretRef:
+#   name: ${APP_CONFIG_SECRET_NAME:=app-defaultconfig}
