@@ -3,6 +3,7 @@ kind: AppConfigSchema
 metadata:
   name: ${APP_NAME:=app}
 spec:
+
 # TODO: define the parameters for your app here
 #  params:
 #  - name: EXAMPLE_VAR
