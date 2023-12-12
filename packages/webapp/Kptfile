@@ -17,7 +17,7 @@ upstreamLock:
     repo: https://github.com/mgoltzsche/kubemate-app-blueprints
     directory: /packages/app
     ref: main
-    commit: 3d29ab02e33e71102de4c3dfa0b79a682187ae1f
+    commit: 401bfd52248c12fbb85160b49e93db12cf0f90b3
 info:
   description: web application
 pipeline:
