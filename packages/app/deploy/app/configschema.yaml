@@ -2,9 +2,9 @@ apiVersion: apps.kubemate.mgoltzsche.github.com/v1alpha1
 kind: AppConfigSchema
 metadata:
   name: ${APP_NAME:=app}
-spec:
 
 # TODO: define the parameters for your app here
+#spec:
 #  params:
 #  - name: EXAMPLE_VAR
 #    type: enum # password|string|enum|number|boolean
