@@ -27,7 +27,6 @@ spec:
         env: []
         resources:
           limits:
-            cpu: 200m
             memory: 64Mi
           requests:
             cpu: 100m
