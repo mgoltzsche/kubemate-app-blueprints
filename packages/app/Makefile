@@ -2,7 +2,7 @@
 # This file is maintained within the upstream kpt package (see Kptfile).
 # Committing manual changes to this file, disables blueprint updates.
 
-KPT_IMAGE ?= mgoltzsche/kpt-docker:1.0.0-beta.32
+KPT_IMAGE ?= mgoltzsche/kpt-docker:1.0.1
 KPT_PKG_UPDATE_STRATEGY ?= resource-merge
 SKAFFOLD_IMAGE ?= gcr.io/k8s-skaffold/skaffold:v2.16.1
 SKAFFOLD_OPTS ?=

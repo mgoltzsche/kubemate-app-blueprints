@@ -8,5 +8,27 @@ info:
   description: application
 pipeline:
   mutators:
-  - image: gcr.io/kpt-fn/apply-setters:v0.2.0
-    configPath: ./setters.yaml
+    - image: ghcr.io/kptdev/krm-functions-catalog/apply-setters:v0.3.0
+      configPath: ./setters.yaml
+status:
+  conditions:
+    - type: Rendered
+      status: "True"
+      reason: RenderSuccess
+  renderStatus:
+    mutationSteps:
+      - image: ghcr.io/kptdev/krm-functions-catalog/apply-setters:v0.3.0
+        exitCode: 0
+        results:
+          - message: set field value to "nginxdemos/nginx-hello"
+            severity: info
+            resourceRef:
+              apiVersion: skaffold/v3alpha1
+              kind: Config
+              name: data
+            field:
+              path: build.artifacts[0].image
+              currentValue: nginxdemos/nginx-hello
+              proposedValue: nginxdemos/nginx-hello
+            file:
+              path: skaffold.yaml
