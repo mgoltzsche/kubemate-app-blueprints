@@ -26,19 +26,19 @@ jobs:
 
     steps:
     - name: Check out code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v7
       with:
         fetch-depth: 0
         persist-credentials: false
 
     - id: release
       name: Prepare release
-      uses: mgoltzsche/conventional-release@v0
+      uses: mgoltzsche/conventional-release@v2
       with:
         commit-files: deploy setters.yaml
 
     - name: Set up qemu
-      uses: docker/setup-qemu-action@v3
+      uses: docker/setup-qemu-action@v4
       with:
         platforms: all
 
