@@ -35,7 +35,7 @@ jobs:
       name: Prepare release
       uses: mgoltzsche/conventional-release@v2
       with:
-        commit-files: deploy setters.yaml
+        commit-files: deploy setters.yaml Kptfile
 
     - name: Set up qemu
       uses: docker/setup-qemu-action@v4
