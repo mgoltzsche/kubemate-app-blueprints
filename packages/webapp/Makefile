@@ -45,7 +45,6 @@ kpt-fn-render: kpt-fn-%:
 		-v "`pwd`:/workspace" \
 		--mount "type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock" \
 		$(KPT_IMAGE) fn $* /workspace --truncate-output=false
-	$(DOCKER) run --rm -v "$$PWD":/workspace -u "`id -u`:`id -g`" $(YQ_IMAGE) -i 'del(.status)' /workspace/Kptfile
 
 .PHONY: blueprint-update
 blueprint-update: kpt-pkg-update render ## Apply the latest blueprint updates to this codebase.

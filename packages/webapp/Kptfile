@@ -17,10 +17,259 @@ upstreamLock:
     repo: https://github.com/mgoltzsche/kubemate-app-blueprints
     directory: /packages/app
     ref: main
-    commit: 84a42fe2e5ac8b992e9c2793f49e3c1d4e7af96f
+    commit: 41cfe2e4e732d6515ee0ad24c8778309ec5bbecf
 info:
   description: web application
 pipeline:
   mutators:
     - image: ghcr.io/kptdev/krm-functions-catalog/apply-setters:v0.3.0
       configPath: ./setters.yaml
+status:
+  conditions:
+    - type: Rendered
+      status: "True"
+      reason: RenderSuccess
+  renderStatus:
+    mutationSteps:
+      - image: ghcr.io/kptdev/krm-functions-catalog/apply-setters:v0.3.0
+        exitCode: 0
+        results:
+          - message: set field value to "blueprint"
+            severity: info
+            resourceRef:
+              apiVersion: apps/v1
+              kind: Deployment
+              name: blueprint
+            field:
+              path: metadata.name
+              currentValue: blueprint
+              proposedValue: blueprint
+            file:
+              path: deploy/app/deployment-patch.yaml
+          - message: set field value to "blueprint"
+            severity: info
+            resourceRef:
+              apiVersion: apps/v1
+              kind: Deployment
+              name: blueprint
+            field:
+              path: metadata.name
+              currentValue: blueprint
+              proposedValue: blueprint
+            file:
+              path: deploy/base/deployment.yaml
+          - message: set field value to "blueprint"
+            severity: info
+            resourceRef:
+              apiVersion: apps/v1
+              kind: Deployment
+              name: blueprint
+            field:
+              path: spec.template.spec.serviceAccountName
+              currentValue: blueprint
+              proposedValue: blueprint
+            file:
+              path: deploy/base/deployment.yaml
+          - message: set field value to "nginxdemos/nginx-hello:0.2"
+            severity: info
+            resourceRef:
+              apiVersion: apps/v1
+              kind: Deployment
+              name: blueprint
+            field:
+              path: spec.template.spec.containers[0].image
+              currentValue: nginxdemos/nginx-hello:0.2
+              proposedValue: nginxdemos/nginx-hello:0.2
+            file:
+              path: deploy/base/deployment.yaml
+          - message: set field value to "8080"
+            severity: info
+            resourceRef:
+              apiVersion: apps/v1
+              kind: Deployment
+              name: blueprint
+            field:
+              path: spec.template.spec.containers[0].ports[0].containerPort
+              currentValue: "8080"
+              proposedValue: "8080"
+            file:
+              path: deploy/base/deployment.yaml
+          - message: set field value to "/healthz"
+            severity: info
+            resourceRef:
+              apiVersion: apps/v1
+              kind: Deployment
+              name: blueprint
+            field:
+              path: spec.template.spec.containers[0].livenessProbe.httpGet.path
+              currentValue: /healthz
+              proposedValue: /healthz
+            file:
+              path: deploy/base/deployment.yaml
+          - message: set field value to "8080"
+            severity: info
+            resourceRef:
+              apiVersion: apps/v1
+              kind: Deployment
+              name: blueprint
+            field:
+              path: spec.template.spec.containers[0].livenessProbe.httpGet.port
+              currentValue: "8080"
+              proposedValue: "8080"
+            file:
+              path: deploy/base/deployment.yaml
+          - message: set field value to "/healthz"
+            severity: info
+            resourceRef:
+              apiVersion: apps/v1
+              kind: Deployment
+              name: blueprint
+            field:
+              path: spec.template.spec.containers[0].readinessProbe.httpGet.path
+              currentValue: /healthz
+              proposedValue: /healthz
+            file:
+              path: deploy/base/deployment.yaml
+          - message: set field value to "8080"
+            severity: info
+            resourceRef:
+              apiVersion: apps/v1
+              kind: Deployment
+              name: blueprint
+            field:
+              path: spec.template.spec.containers[0].readinessProbe.httpGet.port
+              currentValue: "8080"
+              proposedValue: "8080"
+            file:
+              path: deploy/base/deployment.yaml
+          - message: set field value to "blueprint"
+            severity: info
+            resourceRef:
+              apiVersion: networking.k8s.io/v1
+              kind: Ingress
+              name: blueprint
+            field:
+              path: metadata.name
+              currentValue: blueprint
+              proposedValue: blueprint
+            file:
+              path: deploy/base/ingress.yaml
+          - message: set field value to "Your App Title"
+            severity: info
+            resourceRef:
+              apiVersion: networking.k8s.io/v1
+              kind: Ingress
+              name: blueprint
+            field:
+              path: metadata.annotations.kubemate.mgoltzsche.github.com/nav-title
+              currentValue: Your App Title
+              proposedValue: Your App Title
+            file:
+              path: deploy/base/ingress.yaml
+          - message: set field value to "/blueprint/"
+            severity: info
+            resourceRef:
+              apiVersion: networking.k8s.io/v1
+              kind: Ingress
+              name: blueprint
+            field:
+              path: spec.rules[0].http.paths[0].path
+              currentValue: /blueprint/
+              proposedValue: /blueprint/
+            file:
+              path: deploy/base/ingress.yaml
+          - message: set field value to "blueprint"
+            severity: info
+            resourceRef:
+              apiVersion: networking.k8s.io/v1
+              kind: Ingress
+              name: blueprint
+            field:
+              path: spec.rules[0].http.paths[0].backend.service.name
+              currentValue: blueprint
+              proposedValue: blueprint
+            file:
+              path: deploy/base/ingress.yaml
+          - message: set field value to "8080"
+            severity: info
+            resourceRef:
+              apiVersion: networking.k8s.io/v1
+              kind: Ingress
+              name: blueprint
+            field:
+              path: spec.rules[0].http.paths[0].backend.service.port.number
+              currentValue: "8080"
+              proposedValue: "8080"
+            file:
+              path: deploy/base/ingress.yaml
+          - message: set field value to "blueprint"
+            severity: info
+            resourceRef:
+              apiVersion: kustomize.config.k8s.io/v1beta1
+              kind: Kustomization
+            field:
+              path: commonLabels.app.kubernetes.io/name
+              currentValue: blueprint
+              proposedValue: blueprint
+            file:
+              path: deploy/base/kustomization.yaml
+          - message: set field value to "blueprint"
+            severity: info
+            resourceRef:
+              apiVersion: v1
+              kind: Service
+              name: blueprint
+            field:
+              path: metadata.name
+              currentValue: blueprint
+              proposedValue: blueprint
+            file:
+              path: deploy/base/service.yaml
+          - message: set field value to "8080"
+            severity: info
+            resourceRef:
+              apiVersion: v1
+              kind: Service
+              name: blueprint
+            field:
+              path: spec.ports[0].port
+              currentValue: "8080"
+              proposedValue: "8080"
+            file:
+              path: deploy/base/service.yaml
+          - message: set field value to "8080"
+            severity: info
+            resourceRef:
+              apiVersion: v1
+              kind: Service
+              name: blueprint
+            field:
+              path: spec.ports[0].targetPort
+              currentValue: "8080"
+              proposedValue: "8080"
+            file:
+              path: deploy/base/service.yaml
+          - message: set field value to "blueprint"
+            severity: info
+            resourceRef:
+              apiVersion: v1
+              kind: ServiceAccount
+              name: blueprint
+            field:
+              path: metadata.name
+              currentValue: blueprint
+              proposedValue: blueprint
+            file:
+              path: deploy/base/serviceaccount.yaml
+          - message: set field value to "nginxdemos/nginx-hello"
+            severity: info
+            resourceRef:
+              apiVersion: skaffold/v3alpha1
+              kind: Config
+              name: data
+            field:
+              path: build.artifacts[0].image
+              currentValue: nginxdemos/nginx-hello
+              proposedValue: nginxdemos/nginx-hello
+            file:
+              path: skaffold.yaml
