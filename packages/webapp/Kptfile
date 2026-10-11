@@ -17,7 +17,7 @@ upstreamLock:
     repo: https://github.com/mgoltzsche/kubemate-app-blueprints
     directory: /packages/app
     ref: main
-    commit: 41cfe2e4e732d6515ee0ad24c8778309ec5bbecf
+    commit: 446e28179d63dd1c5298a20f6729c1dcfb41cef0
 info:
   description: web application
 pipeline:
@@ -264,7 +264,7 @@ status:
           - message: set field value to "nginxdemos/nginx-hello"
             severity: info
             resourceRef:
-              apiVersion: skaffold/v3alpha1
+              apiVersion: skaffold/v4beta14
               kind: Config
               name: data
             field:
